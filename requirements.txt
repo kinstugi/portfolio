@@ -1,0 +1,8 @@
+python-dotenv
+google-generativeai
+reportlab
+PyPDF2
+python-docx
+textract
+playwright
+

@@ -1,0 +1,79 @@
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# Generated results (may contain personal information)
+generated_result/
+*.pdf
+*.html
+!templates/*.html
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Resume files (may contain personal information)
+resume/
+*.pdf
+*.doc
+*.docx
+!requirements.txt
+
+# Job description (may contain sensitive information)
+job_description.txt
+
+# Images (may contain personal photos)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+!templates/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.bak
+
+# Playwright
+.playwright/
+
+# OS files
+Thumbs.db
+.DS_Store
+

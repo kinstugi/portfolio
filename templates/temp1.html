@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - {{name}}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-bg: #e9e5d9;
+            --text-dark: #333333;
+            --accent-gold: #b29b7d;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f4f4f4;
+            color: var(--text-dark);
+            line-height: 1.5;
+            display: flex;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        .cv-container {
+            width: 850px;
+            background: var(--white);
+            display: flex;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            min-height: 1100px;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 300px;
+            background-color: var(--sidebar-bg);
+            padding: 40px 30px;
+        }
+
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: url('{{image}}') center/cover;
+            border: 5px solid var(--white);
+            margin: 0 auto 30px;
+        }
+
+        .contact-info {
+            font-size: 0.85rem;
+            margin-bottom: 40px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding-bottom: 5px;
+        }
+
+        .skills-list, .travel-list {
+            list-style: none;
+            font-size: 0.9rem;
+        }
+
+        .skills-list li {
+            margin-bottom: 8px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 60px 40px;
+        }
+
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .job-title {
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .summary {
+            font-size: 0.95rem;
+            margin-bottom: 40px;
+            text-align: justify;
+        }
+
+        .summary b {
+            font-weight: 700;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .section-header::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            position: absolute;
+            left: -46px;
+        }
+
+        .section-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+        }
+
+        .experience-item, .education-item {
+            position: relative;
+            padding-bottom: 30px;
+            border-left: 2px solid var(--accent-gold);
+            margin-left: -41px;
+            padding-left: 39px;
+        }
+
+        .item-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+
+        .item-title {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .date-location {
+            font-size: 0.8rem;
+            color: #777;
+            text-align: right;
+        }
+
+        .company-name {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .bullet-list {
+            list-style-type: none;
+            font-size: 0.88rem;
+        }
+
+        .bullet-list li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .bullet-list li::before {
+            content: "•";
+            color: var(--accent-gold);
+            position: absolute;
+            left: -15px;
+        }
+
+        @media print {
+            /* Remove browser default headers and footers (title, date, URL) */
+            @page {
+                margin: 0;
+            }
+            
+            /* Preserve colors and backgrounds when printing */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            /* Hide everything except the CV container */
+            body {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            
+            /* Hide the gray background and any external UI */
+            body * {
+                visibility: hidden;
+            }
+            
+            /* Show only the CV container and its children */
+            .cv-container, .cv-container * {
+                visibility: visible !important;
+            }
+            
+            /* Position the container at the very top-left for the print engine */
+            .cv-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100% !important;
+                box-shadow: none;
+                background: var(--white) !important;
+            }
+            
+            /* Ensure sidebar background is preserved */
+            .sidebar {
+                background-color: var(--sidebar-bg) !important;
+            }
+            
+            /* Ensure all colors are preserved */
+            .job-title, .company-name {
+                color: var(--accent-gold) !important;
+            }
+            
+            /* Ensure bullets are visible */
+            .bullet-list li::before {
+                color: var(--accent-gold) !important;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="cv-container">
+    <aside class="sidebar">
+        <div class="profile-img"></div>
+        
+        <div class="contact-info">
+            {{#phone}}<div class="contact-item">📞 {{phone}}</div>{{/phone}}
+            {{#email}}<div class="contact-item">✉️ {{email}}</div>{{/email}}
+            {{#location}}<div class="contact-item">📍 {{location}}</div>{{/location}}
+            {{#github}}<div class="contact-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display: inline-block; vertical-align: middle; margin-right: 5px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg> <a href="{{github}}" target="_blank" style="color: inherit; text-decoration: none;">{{github_display}}</a></div>{{/github}}
+            {{#linkedin}}<div class="contact-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display: inline-block; vertical-align: middle; margin-right: 5px;"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.386-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> <a href="{{linkedin}}" target="_blank" style="color: inherit; text-decoration: none;">{{linkedin_display}}</a></div>{{/linkedin}}
+            {{#portfolio}}<div class="contact-item">🌐 <a href="{{portfolio}}" target="_blank" style="color: inherit; text-decoration: none;">{{portfolio_display}}</a></div>{{/portfolio}}
+        </div>
+
+        {{#skills}}
+        <h3 class="sidebar-section-title">Skills</h3>
+        <ul class="skills-list">
+            {{#skills_list}}
+            <li>{{skill}}</li>
+            {{/skills_list}}
+        </ul>
+        {{/skills}}
+
+        {{#languages}}
+        <h3 class="sidebar-section-title" style="margin-top:40px;">Languages</h3>
+        <ul class="skills-list">
+            {{#languages_list}}
+            <li>{{language}}</li>
+            {{/languages_list}}
+        </ul>
+        {{/languages}}
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>{{name}}</h1>
+            <div class="job-title">{{job_title}}</div>
+            {{#summary}}
+            <p class="summary">
+                {{summary}}
+            </p>
+            {{/summary}}
+        </header>
+
+        {{#experience}}
+        <section>
+            <div class="section-header"><h2>Work Experience</h2></div>
+            
+            {{#experience_list}}
+            <div class="experience-item">
+                <div class="item-title-row">
+                    <span class="item-title">{{position}}</span>
+                    <span class="date-location">{{startDate}} - {{endDate}}</span>
+                </div>
+                <div class="company-name">{{company}}{{#location}} | {{location}}{{/location}}</div>
+                {{#description}}
+                <ul class="bullet-list">
+                    {{#description_list}}
+                    <li>{{item}}</li>
+                    {{/description_list}}
+                </ul>
+                {{/description}}
+            </div>
+            {{/experience_list}}
+        </section>
+        {{/experience}}
+
+        {{#education}}
+        <section>
+            <div class="section-header"><h2>Education</h2></div>
+            
+            {{#education_list}}
+            <div class="education-item">
+                <div class="item-title-row">
+                    <span class="item-title">{{degree}}{{#field}} in {{field}}{{/field}}</span>
+                    <span class="date-location">{{startDate}}{{#endDate}} - {{endDate}}{{/endDate}}</span>
+                </div>
+                <div class="company-name">{{institution}}{{#location}} | {{location}}{{/location}}</div>
+            </div>
+            {{/education_list}}
+        </section>
+        {{/education}}
+
+        {{#certifications}}
+        <section>
+            <div class="section-header"><h2>Certifications</h2></div>
+            <ul class="bullet-list">
+                {{#certifications_list}}
+                <li>{{certification}}</li>
+                {{/certifications_list}}
+            </ul>
+        </section>
+        {{/certifications}}
+
+        {{#projects}}
+        <section>
+            <div class="section-header"><h2>Projects</h2></div>
+            {{#projects_list}}
+            <div class="experience-item">
+                <div class="item-title-row">
+                    <span class="item-title">{{name}}</span>
+                </div>
+                {{#description}}<div class="company-name">{{description}}</div>{{/description}}
+                {{#technologies}}
+                <ul class="bullet-list">
+                    {{#technologies_list}}
+                    <li>{{tech}}</li>
+                    {{/technologies_list}}
+                </ul>
+                {{/technologies}}
+            </div>
+            {{/projects_list}}
+        </section>
+        {{/projects}}
+    </main>
+</div>
+
+</body>
+</html>
