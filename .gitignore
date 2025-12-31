@@ -44,7 +44,6 @@ env/
 *.swp
 *.swo
 *~
-.DS_Store
 
 # Resume files (may contain personal information)
 resume/
@@ -76,4 +75,42 @@ job_description.txt
 # OS files
 Thumbs.db
 .DS_Store
+
+# .NET / C# sensitive files
+## Configuration files with secrets (exclude environment-specific configs with API keys)
+**/appsettings.Development.json
+**/appsettings.Production.json
+**/appsettings.*.json
+!**/appsettings.example.json
+
+## User secrets
+**/Properties/launchSettings.json
+**/secrets.json
+
+## Database files
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+## Uploads and user files (may contain personal information)
+**/uploads/
+**/wwwroot/uploads/
+
+## Build results
+**/bin/
+**/obj/
+**/[Bb]in/
+**/[Oo]bj/
+**/[Oo]ut/
+
+## .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+**/packages/
+*.nupkg
+*.snupkg
+*.sln.iml
 
