@@ -17,15 +17,18 @@ public class TailoredApplicationController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
     private readonly IAiService _aiService;
+    private readonly IPdfService _pdfService;
     private readonly ILogger<TailoredApplicationController> _logger;
 
     public TailoredApplicationController(
         ApplicationDbContext context,
         IAiService aiService,
+        IPdfService pdfService,
         ILogger<TailoredApplicationController> logger)
     {
         _context = context;
         _aiService = aiService;
+        _pdfService = pdfService;
         _logger = logger;
     }
 
@@ -156,6 +159,96 @@ public class TailoredApplicationController : ControllerBase
         {
             _logger.LogError(ex, "Error processing tailored application");
             return StatusCode(500, new { message = $"An error occurred while processing the tailored application: {ex.Message}" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<TailorApplicationResponse>>> GetAllTailoredApplications()
+    {
+        try
+        {
+            // Get current user ID from JWT token
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !Guid.TryParse(userIdClaim.Value, out var userId))
+            {
+                return Unauthorized(new { message = "Invalid user token" });
+            }
+
+            _logger.LogInformation($"Fetching all tailored applications for user {userId}");
+
+            // Get all tailored applications for the user, ordered by most recent first
+            var tailoredApplications = await _context.TailoredApplications
+                .Where(ta => ta.UserId == userId)
+                .OrderByDescending(ta => ta.CreatedAt)
+                .ToListAsync();
+
+            // Map to response DTOs
+            var responses = tailoredApplications.Select(ta =>
+            {
+                var tailoredCvObject = JsonSerializer.Deserialize<object>(ta.TailoredCvJson);
+
+                return new TailorApplicationResponse
+                {
+                    Id = ta.Id,
+                    JobTitle = ta.JobTitle,
+                    CompanyName = ta.CompanyName,
+                    TailoredCv = tailoredCvObject ?? new { },
+                    CoverLetter = ta.CoverLetter,
+                    CreatedAt = ta.CreatedAt,
+                    UpdatedAt = ta.UpdatedAt
+                };
+            }).ToList();
+
+            return Ok(responses);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching tailored applications");
+            return StatusCode(500, new { message = $"An error occurred while fetching tailored applications: {ex.Message}" });
+        }
+    }
+
+    [HttpGet("{id}/pdf")]
+    public async Task<IActionResult> GetTailoredApplicationPdf(Guid id, [FromQuery] int templateNumber = 3)
+    {
+        try
+        {
+            // Get current user ID from JWT token
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !Guid.TryParse(userIdClaim.Value, out var userId))
+            {
+                return Unauthorized(new { message = "Invalid user token" });
+            }
+
+            _logger.LogInformation($"Generating PDF for tailored application {id} for user {userId} using template {templateNumber}");
+
+            // Get the tailored application
+            var tailoredApplication = await _context.TailoredApplications
+                .Where(ta => ta.Id == id && ta.UserId == userId)
+                .FirstOrDefaultAsync();
+
+            if (tailoredApplication == null)
+            {
+                return NotFound(new { message = "Tailored application not found." });
+            }
+
+            // Validate template number
+            if (templateNumber < 1 || templateNumber > 4)
+            {
+                return BadRequest(new { message = "Template number must be between 1 and 4." });
+            }
+
+            // Generate PDF using the PDF service
+            var pdfBytes = await _pdfService.GenerateTailoredApplicationPdfAsync(tailoredApplication, templateNumber);
+
+            // Return PDF file with appropriate filename
+            var fileName = $"{tailoredApplication.JobTitle.Replace(" ", "_")}_Tailored_CV.pdf";
+            return File(pdfBytes, "application/pdf", fileName);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error generating tailored application PDF");
+            return StatusCode(500, new { message = $"An error occurred while generating the PDF: {ex.Message}" });
         }
     }
 }

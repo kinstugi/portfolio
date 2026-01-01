@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IAiService, AiService>();
+builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddHttpClient();
 
 // Configure JWT Authentication
