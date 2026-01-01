@@ -36,8 +36,20 @@ function LoginPage() {
         userId: response.data.userId,
       }));
 
-      // Redirect to dashboard (or home)
-      navigate('/dashboard');
+      // Check if user has a resume - if not, redirect to onboarding
+      try {
+        await apiClient.get('/resume/last');
+        // User has a resume, go to dashboard
+        navigate('/dashboard');
+      } catch (err) {
+        // User doesn't have a resume (404) or other error, redirect to onboarding
+        if (err.response?.status === 404) {
+          navigate('/onboarding');
+        } else {
+          // For other errors, still redirect to onboarding to be safe
+          navigate('/onboarding');
+        }
+      }
     } catch (err) {
       setError(
         err.response?.data?.message || 

@@ -38,8 +38,8 @@ function SignupPage() {
         userId: response.data.userId,
       }));
 
-      // Redirect to dashboard (or home)
-      navigate('/dashboard');
+      // New users never have a resume, so always go to onboarding
+      navigate('/onboarding');
     } catch (err) {
       setError(
         err.response?.data?.message || 
