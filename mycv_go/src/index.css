@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Matches the massive Hero title */
+  .modern-heading-1 {
+    @apply text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.1];
+  }
+
+  /* Matches the section headers */
+  .modern-heading-2 {
+    @apply text-3xl lg:text-5xl font-extrabold tracking-tight;
+  }
+
+  /* Matches the small labels above titles */
+  .modern-label {
+    @apply text-[10px] uppercase tracking-[0.3em] font-black text-gray-400;
+  }
+
+  /* Matches the sub-headers for feature items */
+  .modern-heading-3 {
+    @apply text-xl font-bold;
+  }
+
+  /* The specific gradient for the "Get Started" button */
+  .modern-header-gradient {
+    @apply bg-[#1a1a1a] hover:bg-black transition-colors;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
