@@ -31,9 +31,11 @@ public class ApplicationDbContext : DbContext
             entity.Property(e => e.Email).IsRequired();
             entity.Property(e => e.FirstName).IsRequired();
             entity.Property(e => e.LastName).IsRequired();
-            entity.Property(e => e.PasswordHash).IsRequired();
+            // PasswordHash is nullable for OAuth users
             entity.Property(e => e.CreatedAt).IsRequired();
             entity.Property(e => e.UpdatedAt).IsRequired();
+            // Index for GoogleId lookup
+            entity.HasIndex(e => e.GoogleId).IsUnique().HasFilter("[GoogleId] IS NOT NULL");
         });
 
         // Resume configuration

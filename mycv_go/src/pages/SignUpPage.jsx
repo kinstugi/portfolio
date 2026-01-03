@@ -258,6 +258,10 @@ function SignUpPage() {
             {/* Continue with Google Button */}
             <button
               type="button"
+              onClick={() => {
+                // Redirect to backend Google OAuth endpoint
+                window.location.href = 'http://localhost:5005/api/auth/google';
+              }}
               className="w-full px-4 py-3 bg-white border-2 border-purple-200 text-gray-900 font-medium rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-3"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">

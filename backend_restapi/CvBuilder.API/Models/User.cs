@@ -19,14 +19,17 @@ public class User
     [MaxLength(100)]
     public string LastName { get; set; } = string.Empty;
     
-    [Required]
-    public string PasswordHash { get; set; } = string.Empty;
+    public string? PasswordHash { get; set; } // Nullable for OAuth users
     
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     
     public bool IsEmailVerified { get; set; } = false;
+    
+    // OAuth fields
+    public string? GoogleId { get; set; }
+    public string? Provider { get; set; } // "google" or "local"
     
     // Navigation property for resumes
     public ICollection<Resume> Resumes { get; set; } = new List<Resume>();
