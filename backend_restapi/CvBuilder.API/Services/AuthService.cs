@@ -140,7 +140,7 @@ public class AuthService : IAuthService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public async Task<string> GetGoogleLoginUrlAsync()
+    public Task<string> GetGoogleLoginUrlAsync()
     {
         var clientId = _configuration["GoogleOAuth:ClientId"] 
             ?? throw new InvalidOperationException("GoogleOAuth:ClientId not configured");
@@ -158,7 +158,7 @@ public class AuthService : IAuthService
                   "access_type=offline&" +
                   "prompt=consent";
         
-        return url;
+        return Task.FromResult(url);
     }
 
     public async Task<AuthResponse> HandleGoogleCallbackAsync(string code)

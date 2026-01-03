@@ -161,6 +161,7 @@ Return ONLY the JSON object, no other text.";
         
         var requestBody = new
         {
+            model = model,
             messages = new[]
             {
                 new { role = "user", content = prompt }

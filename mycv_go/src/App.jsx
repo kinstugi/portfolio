@@ -5,6 +5,7 @@ import SignUpPage from './pages/SignUpPage';
 import PasswordResetPage from './pages/PasswordResetPage';
 import DashboardPage from './pages/DashboardPage';
 import AuthCallback from './pages/AuthCallback';
+import CvBuilderPage from './pages/CvBuilderPage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/password-reset" element={<PasswordResetPage />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/cv-builder" element={<CvBuilderPage />} />
       </Routes>
     </Router>
   );

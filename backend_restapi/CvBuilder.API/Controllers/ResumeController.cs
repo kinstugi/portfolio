@@ -161,6 +161,43 @@ public class ResumeController : ControllerBase
         }
     }
 
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<ResumeListItemResponse>>> GetAllResumes()
+    {
+        try
+        {
+            // Get current user ID from JWT token
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !Guid.TryParse(userIdClaim.Value, out var userId))
+            {
+                return Unauthorized(new { message = "Invalid user token" });
+            }
+
+            _logger.LogInformation($"Fetching all resumes for user {userId}");
+
+            // Get all resumes for the user, ordered by most recent first
+            var resumes = await _context.Resumes
+                .Where(r => r.UserId == userId)
+                .OrderByDescending(r => r.UpdatedAt)
+                .Select(r => new ResumeListItemResponse
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Title = r.Title,
+                    CreatedAt = r.CreatedAt,
+                    UpdatedAt = r.UpdatedAt
+                })
+                .ToListAsync();
+
+            return Ok(resumes);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching resumes");
+            return StatusCode(500, new { message = $"An error occurred while fetching resumes: {ex.Message}" });
+        }
+    }
+
     [HttpGet("last")]
     public async Task<ActionResult<ResumeResponse>> GetLastResume()
     {
@@ -438,6 +475,45 @@ public class ResumeController : ControllerBase
         {
             _logger.LogError(ex, "Error updating resume");
             return StatusCode(500, new { message = $"An error occurred while updating the resume: {ex.Message}" });
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteResume(Guid id)
+    {
+        try
+        {
+            // Get current user ID from JWT token
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !Guid.TryParse(userIdClaim.Value, out var userId))
+            {
+                return Unauthorized(new { message = "Invalid user token" });
+            }
+
+            _logger.LogInformation($"Deleting resume {id} for user {userId}");
+
+            // Get the resume and verify it belongs to the user
+            var resume = await _context.Resumes
+                .Where(r => r.Id == id && r.UserId == userId)
+                .FirstOrDefaultAsync();
+
+            if (resume == null)
+            {
+                return NotFound(new { message = "Resume not found or you don't have permission to delete it." });
+            }
+
+            // Delete the resume (cascade delete will handle related entities)
+            _context.Resumes.Remove(resume);
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation($"Resume {id} deleted successfully");
+
+            return Ok(new { message = "Resume deleted successfully." });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting resume");
+            return StatusCode(500, new { message = $"An error occurred while deleting the resume: {ex.Message}" });
         }
     }
 }
