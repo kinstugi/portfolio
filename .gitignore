@@ -1,0 +1,25 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node (in case anyone adds tooling later)
+node_modules/
+npm-debug.log*
+
+# Build outputs
+dist/
+build/
+
+# Local env / secrets
+.env
+.env.local
+
+# CV PDFs (uncomment the line below if you want to keep your CVs out of git)
+# cv.pdf
+# resume.pdf

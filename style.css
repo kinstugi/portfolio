@@ -1,0 +1,631 @@
+/* ============================================================
+   Terminal portfolio — themed terminal
+   Default = CachyOS (Catppuccin Mocha with purple lean).
+   Switch with:  theme cachyos | matrix | solarized | tokyo
+   ============================================================ */
+
+:root {
+  /* Base */
+  --bg-deep: #0a0a14;
+  --bg-base: #11111b;
+  --bg-surface: #1e1e2e;
+  --bg-overlay: #181825;
+
+  /* Foreground */
+  --fg: #cdd6f4;
+  --fg-dim: #a6adc8;
+  --fg-muted: #6c7086;
+  --fg-subtle: #45475a;
+
+  /* Accents */
+  --c-red: #f38ba8;
+  --c-green: #a6e3a1;
+  --c-yellow: #f9e2af;
+  --c-blue: #89b4fa;
+  --c-magenta: #cba6f7;
+  --c-cyan: #94e2d5;
+  --c-orange: #fab387;
+  --c-pink: #f5c2e7;
+
+  /* CachyOS purple lean */
+  --c-purple: #b4befe;
+  --c-accent: var(--c-magenta);
+
+  /* Cursor + ambient glow (RGB tuples so the gradient can compose them) */
+  --cursor-color: var(--c-magenta);
+  --cursor-focus: var(--c-cyan);
+  --glow-a: 203, 166, 247;
+  --glow-b: 137, 180, 250;
+  --text-glow: none;
+  --chrome-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(203, 166, 247, 0.05),
+    0 0 80px -20px rgba(203, 166, 247, 0.15);
+
+  /* Type */
+  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, SFMono-Regular,
+    Menlo, Consolas, monospace;
+  --fs-base: 15px;
+  --lh: 1.5;
+
+  /* Layout */
+  --radius: 10px;
+  --chrome-h: 32px;
+  --pad: 18px;
+}
+
+/* ---------- Matrix: phosphor green on black ---------- */
+:root[data-theme="matrix"] {
+  --bg-deep: #000000;
+  --bg-base: #030703;
+  --bg-surface: #051005;
+  --bg-overlay: #050b05;
+
+  --fg: #00ff66;
+  --fg-dim: #00b84a;
+  --fg-muted: #007030;
+  --fg-subtle: #002a14;
+
+  --c-red: #00ff66;
+  --c-green: #00ff66;
+  --c-yellow: #66ff99;
+  --c-blue: #00ff66;
+  --c-magenta: #00ff66;
+  --c-cyan: #00ff66;
+  --c-orange: #66ff99;
+  --c-pink: #66ff99;
+  --c-purple: #00ff66;
+  --c-accent: #00ff66;
+
+  --cursor-color: #00ff66;
+  --cursor-focus: #99ffbb;
+  --glow-a: 0, 255, 102;
+  --glow-b: 0, 255, 102;
+  --text-glow: 0 0 4px rgba(0, 255, 102, 0.35);
+  --chrome-shadow:
+    0 30px 80px -20px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(0, 255, 102, 0.08),
+    0 0 100px -10px rgba(0, 255, 102, 0.18);
+}
+
+/* ---------- Solarized Dark ---------- */
+:root[data-theme="solarized"] {
+  --bg-deep: #001f27;
+  --bg-base: #002b36;
+  --bg-surface: #073642;
+  --bg-overlay: #06313d;
+
+  --fg: #93a1a1;
+  --fg-dim: #839496;
+  --fg-muted: #586e75;
+  --fg-subtle: #073642;
+
+  --c-red: #dc322f;
+  --c-green: #859900;
+  --c-yellow: #b58900;
+  --c-blue: #268bd2;
+  --c-magenta: #d33682;
+  --c-cyan: #2aa198;
+  --c-orange: #cb4b16;
+  --c-pink: #d33682;
+  --c-purple: #6c71c4;
+  --c-accent: var(--c-cyan);
+
+  --cursor-color: var(--c-cyan);
+  --cursor-focus: var(--c-blue);
+  --glow-a: 42, 161, 152;
+  --glow-b: 38, 139, 210;
+  --text-glow: none;
+  --chrome-shadow:
+    0 30px 80px -20px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(42, 161, 152, 0.06),
+    0 0 80px -20px rgba(42, 161, 152, 0.12);
+}
+
+/* ---------- Tokyo Night ---------- */
+:root[data-theme="tokyo"] {
+  --bg-deep: #16161e;
+  --bg-base: #1a1b26;
+  --bg-surface: #24283b;
+  --bg-overlay: #1f2335;
+
+  --fg: #c0caf5;
+  --fg-dim: #9aa5ce;
+  --fg-muted: #565f89;
+  --fg-subtle: #414868;
+
+  --c-red: #f7768e;
+  --c-green: #9ece6a;
+  --c-yellow: #e0af68;
+  --c-blue: #7aa2f7;
+  --c-magenta: #bb9af7;
+  --c-cyan: #7dcfff;
+  --c-orange: #ff9e64;
+  --c-pink: #f7768e;
+  --c-purple: #9d7cd8;
+  --c-accent: var(--c-magenta);
+
+  --cursor-color: var(--c-magenta);
+  --cursor-focus: var(--c-cyan);
+  --glow-a: 187, 154, 247;
+  --glow-b: 122, 162, 247;
+  --text-glow: none;
+  --chrome-shadow:
+    0 30px 80px -20px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(187, 154, 247, 0.06),
+    0 0 80px -20px rgba(187, 154, 247, 0.14);
+}
+
+/* Apply optional text glow (only matrix sets it) */
+:root[data-theme] body,
+:root[data-theme] .terminal__screen,
+:root[data-theme] .terminal__form {
+  text-shadow: var(--text-glow);
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg-deep);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: var(--fs-base);
+  line-height: var(--lh);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at top left, rgba(var(--glow-a), 0.10), transparent 55%),
+    radial-gradient(ellipse at bottom right, rgba(var(--glow-b), 0.08), transparent 55%),
+    var(--bg-deep);
+  min-height: 100%;
+  overflow: hidden;
+  transition: background 0.25s ease;
+}
+
+a {
+  color: var(--c-cyan);
+  text-decoration: underline;
+  text-decoration-color: rgba(148, 226, 213, 0.4);
+  text-underline-offset: 2px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+a:hover,
+a:focus {
+  color: var(--c-magenta);
+  text-decoration-color: var(--c-magenta);
+}
+
+::selection {
+  background: rgba(203, 166, 247, 0.35);
+  color: var(--fg);
+}
+
+/* ============================================================
+   Terminal container
+   ============================================================ */
+
+.terminal {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  width: 100%;
+  margin: 0 auto;
+  background: linear-gradient(180deg, var(--bg-base) 0%, #0e0e1a 100%);
+  border: 1px solid var(--fg-subtle);
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+}
+
+@media (min-width: 900px) {
+  body {
+    padding: 24px;
+  }
+  .terminal {
+    height: calc(100dvh - 48px);
+    max-width: 1100px;
+    box-shadow: var(--chrome-shadow);
+    transition: box-shadow 0.25s ease, background 0.25s ease;
+  }
+}
+
+/* ============================================================
+   Window chrome
+   ============================================================ */
+
+.terminal__chrome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--chrome-h);
+  padding: 0 12px;
+  background: var(--bg-overlay);
+  border-bottom: 1px solid var(--fg-subtle);
+  user-select: none;
+  flex: 0 0 auto;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot--red {
+  background: var(--c-red);
+}
+.dot--yellow {
+  background: var(--c-yellow);
+}
+.dot--green {
+  background: var(--c-green);
+}
+
+.terminal__title {
+  flex: 1;
+  text-align: center;
+  font-size: 12px;
+  color: var(--fg-dim);
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   Screen (output area)
+   ============================================================ */
+
+.terminal__screen {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: var(--pad);
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--fg-subtle) transparent;
+}
+
+.terminal__screen::-webkit-scrollbar {
+  width: 8px;
+}
+.terminal__screen::-webkit-scrollbar-thumb {
+  background: var(--fg-subtle);
+  border-radius: 4px;
+}
+.terminal__screen::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Output line blocks */
+.line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+  min-height: 1lh;
+}
+.line + .line {
+  margin-top: 0.1em;
+}
+
+.line--prompt {
+  color: var(--fg);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  align-items: baseline;
+}
+.line--prompt .prompt-user {
+  color: var(--c-green);
+  font-weight: 500;
+}
+.line--prompt .prompt-at {
+  color: var(--fg);
+}
+.line--prompt .prompt-host {
+  color: var(--c-cyan);
+  font-weight: 500;
+}
+.line--prompt .prompt-colon {
+  color: var(--fg);
+}
+.line--prompt .prompt-path {
+  color: var(--c-blue);
+  font-weight: 500;
+}
+.line--prompt .prompt-dollar {
+  color: var(--fg);
+  margin-right: 0.5ch;
+}
+.line--prompt .cmd-text {
+  color: var(--fg);
+}
+
+.line--out {
+  color: var(--fg-dim);
+}
+.line--err {
+  color: var(--c-red);
+}
+.line--ok {
+  color: var(--c-green);
+}
+.line--hint {
+  color: var(--c-yellow);
+}
+
+.color-green {
+  color: var(--c-green);
+}
+.color-cyan {
+  color: var(--c-cyan);
+}
+.color-blue {
+  color: var(--c-blue);
+}
+.color-magenta {
+  color: var(--c-magenta);
+}
+.color-purple {
+  color: var(--c-purple);
+}
+.color-yellow {
+  color: var(--c-yellow);
+}
+.color-orange {
+  color: var(--c-orange);
+}
+.color-red {
+  color: var(--c-red);
+}
+.color-pink {
+  color: var(--c-pink);
+}
+.color-dim {
+  color: var(--fg-dim);
+}
+.color-muted {
+  color: var(--fg-muted);
+}
+.color-bold {
+  font-weight: 700;
+}
+
+/* ============================================================
+   Input form
+   ============================================================ */
+
+.terminal__form {
+  display: flex;
+  align-items: center;
+  padding: 8px var(--pad) var(--pad);
+  background: transparent;
+  flex: 0 0 auto;
+  border-top: 1px solid transparent;
+}
+
+.terminal__prompt {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+  margin-right: 0.5ch;
+  font-family: var(--font-mono);
+}
+.terminal__prompt .prompt-user {
+  color: var(--c-green);
+  font-weight: 500;
+}
+.terminal__prompt .prompt-at {
+  color: var(--fg);
+}
+.terminal__prompt .prompt-host {
+  color: var(--c-cyan);
+  font-weight: 500;
+}
+.terminal__prompt .prompt-colon {
+  color: var(--fg);
+}
+.terminal__prompt .prompt-path {
+  color: var(--c-blue);
+  font-weight: 500;
+}
+.terminal__prompt .prompt-dollar {
+  color: var(--fg);
+}
+
+.terminal__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: inherit;
+  line-height: inherit;
+  caret-color: transparent; /* we draw our own cursor */
+  padding: 0;
+  min-width: 0;
+}
+
+.terminal__input::placeholder {
+  color: var(--fg-muted);
+}
+
+/* Blinking block cursor (sits after the input) */
+.terminal__form::after {
+  content: "";
+  display: inline-block;
+  width: 0.6em;
+  height: 1.15em;
+  background: var(--cursor-color);
+  margin-left: 0.15ch;
+  transform: translateY(2px);
+  animation: blink 1.05s steps(1) infinite;
+  box-shadow: 0 0 8px rgba(var(--glow-a), 0.55);
+  border-radius: 1px;
+  flex: 0 0 auto;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.terminal__form:focus-within::after {
+  background: var(--cursor-focus);
+  box-shadow: 0 0 10px rgba(var(--glow-b), 0.65);
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  50.01%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Caret hidden while focused is fine because we draw our own */
+/* But on mobile, the native caret is useful — show it on touch */
+@media (hover: none) and (pointer: coarse) {
+  .terminal__input {
+    caret-color: var(--c-magenta);
+  }
+  .terminal__form::after {
+    display: none;
+  }
+}
+
+/* Reduced motion: keep things calm */
+@media (prefers-reduced-motion: reduce) {
+  .terminal__form::after,
+  .terminal__form:focus-within::after {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   Small screens
+   ============================================================ */
+
+@media (max-width: 600px) {
+  :root {
+    --fs-base: 13.5px;
+    --pad: 14px;
+  }
+  .terminal__title {
+    display: none;
+  }
+  .terminal__chrome {
+    justify-content: flex-start;
+  }
+}
+
+/* ============================================================
+   Neofetch layout (two columns, stack on mobile)
+   ============================================================ */
+
+.neofetch {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5em;
+  align-items: start;
+  margin: 0.5em 0 0.25em;
+}
+.neofetch__logo {
+  margin: 0;
+  color: var(--c-magenta);
+  line-height: 1.05;
+  font-size: 0.95em;
+  text-shadow: 0 0 12px rgba(203, 166, 247, 0.25);
+}
+.neofetch__info {
+  line-height: 1.55;
+}
+@media (max-width: 700px) {
+  .neofetch {
+    grid-template-columns: 1fr;
+    gap: 0.75em;
+  }
+  .neofetch__logo {
+    font-size: 0.85em;
+    overflow-x: auto;
+  }
+}
+
+/* ============================================================
+   Wget progress bar
+   ============================================================ */
+
+.wget-bar__empty {
+  opacity: 0.35;
+}
+
+/* ============================================================
+   "↓ latest" jump button
+   Appears when the user scrolls up during typing, so they can
+   free-scroll without losing the cursor. Tapping it snaps to bottom.
+   ============================================================ */
+
+.jump-to-latest {
+  position: fixed;
+  bottom: calc(var(--chrome-h) + 16px);
+  right: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-overlay);
+  color: var(--c-cyan);
+  border: 1px solid var(--fg-subtle);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease, color 0.15s ease,
+    background 0.15s ease, border-color 0.15s ease;
+  z-index: 10;
+  box-shadow: 0 6px 18px -6px rgba(0, 0, 0, 0.6);
+}
+.jump-to-latest.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.jump-to-latest:hover {
+  color: var(--c-magenta);
+  border-color: var(--c-magenta);
+  background: var(--bg-surface);
+}
+.jump-to-latest:focus-visible {
+  outline: 2px solid var(--c-cyan);
+  outline-offset: 2px;
+}
+.jump-to-latest__arrow {
+  font-size: 14px;
+  line-height: 1;
+}
+
+@media (max-width: 600px) {
+  .jump-to-latest {
+    right: 16px;
+    bottom: calc(var(--chrome-h) + 12px);
+  }
+}
+
+/* Print: a recruiter printing? still readable */
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+  }
+  .terminal__form,
+  .terminal__chrome {
+    display: none;
+  }
+}

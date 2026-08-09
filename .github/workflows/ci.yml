@@ -1,0 +1,74 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches-ignore: [main]   # main is handled by deploy.yml; this catches feature branches pushed without a PR
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build & smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true
+          tags: portfolio:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Smoke test
+        run: |
+          set -euo pipefail
+          PORT=8080
+          docker run -d --rm --name portfolio-ci -p ${PORT}:8080 \
+            -e PORT=${PORT} portfolio:ci
+          # Wait for nginx to come up.
+          for _ in $(seq 1 20); do
+            if curl -fsS -o /dev/null "http://127.0.0.1:${PORT}/"; then
+              break
+            fi
+            sleep 0.5
+          done
+
+          # 1) HTML is served and contains the terminal marker.
+          curl -fsS "http://127.0.0.1:${PORT}/" \
+            | grep -q 'user@portfolio' \
+            || { echo "index.html missing terminal marker"; exit 1; }
+
+          # 2) CSS is served with 200.
+          status=$(curl -s -o /dev/null -w '%{http_code}' \
+            "http://127.0.0.1:${PORT}/style.css")
+          [ "$status" = "200" ] \
+            || { echo "style.css returned $status, want 200"; exit 1; }
+
+          # 3) JS module is served.
+          status=$(curl -s -o /dev/null -w '%{http_code}' \
+            "http://127.0.0.1:${PORT}/main.js")
+          [ "$status" = "200" ] \
+            || { echo "main.js returned $status, want 200"; exit 1; }
+
+          # 4) CV download endpoint is wired (404 is fine if cv.pdf is
+          #    not in the build context; anything other than a server
+          #    error is acceptable).
+          cv_status=$(curl -s -o /dev/null -w '%{http_code}' \
+            "http://127.0.0.1:${PORT}/cv.pdf")
+          case "$cv_status" in
+            200|404) ;;
+            *) echo "cv.pdf returned $cv_status, want 200 or 404"; exit 1 ;;
+          esac
+
+          echo "Smoke test passed."
+          docker stop portfolio-ci >/dev/null

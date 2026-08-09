@@ -1,0 +1,8 @@
+.git
+.gitignore
+.dockerignore
+node_modules
+.DS_Store
+*.log
+README.md
+AGENTS.md
