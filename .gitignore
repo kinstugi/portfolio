@@ -20,6 +20,19 @@ build/
 .env
 .env.local
 
+# Python (uv venvs + build artifacts)
+.venv/
+**/.venv/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.dist-info/
+
+# Personal assets that aren't part of the build
+scripts/passport_photo.jpeg
+
 # CV PDFs (uncomment the line below if you want to keep your CVs out of git)
 # cv.pdf
 # resume.pdf
