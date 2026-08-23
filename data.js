@@ -171,22 +171,6 @@ export const PROJECTS = [
     ],
   },
   {
-    slug: "cv-tailoring",
-    title: "CV tailoring & matching platform",
-    summary:
-      "Matches a candidate profile to a job description and produces a tailored CV draft.",
-    stack: ["Python", "uv", "pydantic-ai", "FastAPI", "Kafka", "Redis", "Groq"],
-    status: "in progress",
-    github: null,
-    demo: null,
-    origin: "Personal project (resume_gen in samples/). The thing that wrote half of this site.",
-    details: [
-      "Streaming pipeline: job description in, structured match analysis out.",
-      "LLM agent picks what to surface from the candidate profile and rewrites bullets.",
-      "Kafka for async tasks, Redis for short-lived match state, Groq for fast inference.",
-    ],
-  },
-  {
     slug: "multi-agent-cv",
     title: "Multi-agent CV generation",
     summary:
@@ -203,17 +187,20 @@ export const PROJECTS = [
   },
   {
     slug: "karaoke-session",
-    title: "Karaoke session app",
+    title: "Friday Karaoke",
     summary:
-      "Dockerised app for karaoke sessions: queue management and ML-based vocal separation.",
-    stack: ["Docker", "Kafka", "Python", "audio ML (vocal separation)"],
-    status: "prototype",
-    github: null,
-    demo: null,
-    origin: "Side project for friends' gatherings.",
+      "Real-time karaoke queue app for school Friday-night events. Hosts run the session from a browser, students scan a QR code and add songs via YouTube URLs, the queue advances live across every device in the room.",
+    stack: ["FastAPI", "Python", "uv", "WebSockets", "React", "TypeScript", "Vite", "PostgreSQL", "Docker", "Cloud Run"],
+    status: "in production (M1–M18 shipped, 240+ tests)",
+    github: "https://github.com/kinstugi/friday-karaoke",
+    demo: "https://karaoke-app-ywmqmgfyoa-uc.a.run.app/host",
+    origin:
+      "Built for our school's Friday karaoke nights. Live Cloud Run deployment backs every weekly session.",
     details: [
-      "Queue and state streamed over Kafka so multiple devices stay in sync.",
-      "Vocal separation runs in a separate worker container.",
+      "Single-origin deploy: the FastAPI container serves the React SPA, the REST API, and WebSocket endpoints from one Cloud Run service.",
+      "WebSockets (`/api/v1/sessions/{id}/ws`) keep host and student clients in sync as the queue advances.",
+      "Neon free-tier Postgres for persistence; YouTube URLs are the song source so there is no media to host.",
+      "Milestones M1–M18 complete: join flow, round-robin queue, automatic playback, host moderation, notifications, round summaries, and abuse protection — backed by a 240+ test suite.",
     ],
   },
   {
