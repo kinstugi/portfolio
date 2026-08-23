@@ -219,6 +219,41 @@ export const PROJECTS = [
     ],
   },
   {
+    slug: "my-cv-generator",
+    title: "My CV Generator",
+    summary:
+      "Full-stack CV management platform: register, build and maintain resumes, AI-tailor them to a pasted job description with Groq, and export a styled PDF in four template variants.",
+    stack: [
+      ".NET 9",
+      "ASP.NET Core",
+      "C#",
+      "PostgreSQL",
+      "EF Core",
+      "Redis",
+      "JWT",
+      "Groq (LLaMA)",
+      "QuestPDF",
+      "React",
+      "Vite",
+      "Firebase Hosting",
+      "Render",
+      "Docker",
+    ],
+    status: "live (older C#/.NET project)",
+    github: "https://github.com/kinstugi/my_cv_gen_api",
+    demo: "https://my-cv-gen-frontend.web.app/",
+    origin:
+      "Earlier project from when I was working in C#/.NET. Still deployed because people use it, but it is not the stack I focus on today.",
+    details: [
+      "Two-repo project: the .NET 9 Web API lives at https://github.com/kinstugi/my_cv_gen_api and the React/Vite SPA at https://github.com/kinstugi/my_cv_gen_frontend.",
+      "Resume CRUD with work experiences, education, languages, projects, skills; deletes are soft so resumes stay recoverable.",
+      "AI tailoring endpoint rephrases bullets and emphasises relevant skills for a pasted job description — factual data (companies, dates, schools) is left untouched.",
+      "PDF export uses QuestPDF and renders four template variants; three of them embed the user's profile image.",
+      "Auth is JWT bearer; the user id is always derived from the token so users can only read or mutate their own data.",
+      "Backend runs on Render with PostgreSQL and Redis; frontend is on Firebase Hosting.",
+    ],
+  },
+  {
     slug: "twitter-api-clone",
     title: "Twitter Clone — Backend API",
     summary:
